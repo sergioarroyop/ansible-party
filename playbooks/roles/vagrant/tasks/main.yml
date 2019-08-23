@@ -1,0 +1,26 @@
+- name: Installing base packages
+  apt: name={{ item.name }}
+  with_items:
+    - { name: 'man' }
+    - { name: 'unzip' }
+    - { name: 'zip'}
+    - { name: 'smem'}
+    - { name: 'vim'}
+    - { name: 'apt-file' }
+    - { name: 'git'}
+    - { name: 'sudo' }
+    - { name: 'build-essential' }
+    - { name: 'bc' }
+    - { name: 'gcc' }
+    - { name: 'curl' }
+    - { name: 'screen' }
+
+- name: Creating /root/.ssh directory
+  become: true
+  file: path="/root/.ssh" mode="700" state=directory
+
+- name: Copying id_rsa keys
+  become: true
+  copy: src={{ item.src }} dest={{ item.dest }} mode={{ item.mode }}
+  with_items:
+    - {src: '~/.ssh/id_rsa.pub', dest: '/root/.ssh/authorized_keys', mode: '0600'}

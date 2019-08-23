@@ -1,0 +1,11 @@
+# Variables
+timezone: Europe/Madrid
+name: vagrant
+ip_id: 56
+lan_network: 192.168.{{ vars["ip_id"]}}.0
+admin_mail: sergioarroyopay@gmail.com
+ps1_prompt: '\[\033[00;32m\]\u@\h \[\033[00;38m\]({{ vars["name"] }})\[\033[00;33m\]\[\033[00;32m\]\w $ \[\033[00m\]'
+
+# Ionic
+proyect_name: Pollito
+proyect_template: tabs #my-first-app #blank #tabs #sidemenu #conference

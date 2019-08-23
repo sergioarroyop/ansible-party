@@ -1,0 +1,37 @@
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Adding nodejs packages
+  get_url:
+    url: https://deb.nodesource.com/setup_12.x
+    dest: /tmp/
+    mode: 0755
+
+- name: Executing setup_12.x
+  shell: /tmp/setup_12.x
+
+- name: Installing software
+  apt: name={{ item.name }} state=present
+  with_items:
+    - { name: 'android-sdk' }
+    - { name: 'nodejs' }
+    - { name: 'default-jre' }
+
+- name: Installing ionic package
+  shell: npm -g install ionic
+
+- name: Installing ionic package
+  shell: npm -g install cordova
+
+- block:
+  - name: Creating new empty proyect
+    shell: ionic start {{ proyect_name }} {{ proyect_template }}
+    args:
+      chdir: /vagrant
+
+  - name: Running proyect
+    shell: screen -Smd ionic-server ionic serve --address 192.168.222.222
+    args:
+      chdir: /vagrant/{{ proyect_name }}
