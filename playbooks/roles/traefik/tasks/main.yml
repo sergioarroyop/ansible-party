@@ -1,0 +1,13 @@
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Download Traefik Binary
+  unarchive: src="https://github.com/containous/traefik/releases/download/v2.0.0-rc1/traefik_v2.0.0-rc1_linux_amd64.tar.gz" dest="/opt" remote_src="True" validate_certs="no"
+
+- name: Creating conf file in /CONF
+  shell: "mkdir -p /CONF/traefik && touch /CONF/traefik/traefik_cnf.yaml"
+
+- name: Running Traefik
+  shell: "/opt/traefik --providers.file.filename=/CONF/traefik/traefik_cnf.yaml &"

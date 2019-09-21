@@ -19,19 +19,19 @@
     - { name: 'nodejs' }
     - { name: 'default-jre' }
 
-- name: Installing ionic package
-  shell: npm -g install ionic
-
-- name: Installing ionic package
-  shell: npm -g install cordova
-
-- block:
-  - name: Creating new empty proyect
-    shell: ionic start {{ proyect_name }} {{ proyect_template }}
-    args:
-      chdir: /vagrant
-
-  - name: Running proyect
-    shell: screen -Smd ionic-server ionic serve --address 192.168.222.222
-    args:
-      chdir: /vagrant/{{ proyect_name }}
+#- name: Installing ionic package
+#  shell: npm -g install ionic
+#
+#- name: Installing ionic package
+#  shell: npm -g install cordova
+#
+#- block:
+#  - name: Creating new empty proyect
+#    shell: ionic start {{ proyect_name }} {{ proyect_template }}
+#    args:
+#      chdir: /vagrant
+#
+#  - name: Running proyect
+#    shell: screen -Smd ionic-server ionic serve --address 192.168.222.222
+#    args:
+#      chdir: /vagrant/{{ proyect_name }}

@@ -1,0 +1,36 @@
+- name: Update all packages to the latest version
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Installing software
+  apt: name={{ item.name }} state=present
+  with_items:
+    - { name: 'apt-transport-https' }
+    - { name: 'ca-certificates' }
+    - { name: 'curl' }
+    - { name: 'software-properties-common' }
+    - { name: 'python3-pip' }
+    - { name: 'virtualenv' }
+    - { name: 'python3-setuptools' }
+    - { name: 'gnupg2' }
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: http://download.docker.com/linux/debian/gpg
+
+- name: Installing Docker package
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+    state: present
+    update_cache: yes
+
+- name: Setting up machine for Docker installation
+  reboot:
+
+- name: Install Docker
+  apt: name={{ item.name }} state=present
+  with_items:
+    - { name: 'docker-ce' }
+    - { name: 'docker-ce-cli' }
+    - { name: 'containerd.io' }
